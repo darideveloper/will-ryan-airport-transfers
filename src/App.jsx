@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import Header from './sections/header'
+import Hero from './sections/hero'
+import Form from './sections/form'
+import Services from './sections/services'
+import Footer from './sections/footer'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <h1>Hello</h1>
-      <p>Hello World</p>
-    </>
+    <div>
+      <Header/>
+      <Hero/>
+      <Form/>
+      <Services/>
+      <Footer/>
+    </div>
   )
 }
 
