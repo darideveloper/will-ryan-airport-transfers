@@ -1,3 +1,15 @@
+import Subtitle from '../assets/subtitle'
+import ServiceCards from '../assets/service-cards'
+
 export default function Service () {
-  return <p>Service</p>
+  return (
+    <section className="services container">
+      <Subtitle 
+        text='Our services include'
+      />
+      <ServiceCards/>
+
+
+    </section>
+  )
 }
