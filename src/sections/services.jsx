@@ -1,5 +1,5 @@
-import Subtitle from '../assets/subtitle'
-import ServiceCards from '../assets/service-cards'
+import Subtitle from '../components/subtitle'
+import ServiceCards from '../components/service-cards'
 
 export default function Service () {
   return (

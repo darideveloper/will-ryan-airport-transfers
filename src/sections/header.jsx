@@ -1,5 +1,5 @@
-import Logo from '../assets/logo'
-import Menu from '../assets/menu'
+import Logo from '../components/logo'
+import Menu from '../components/menu'
 
 export default function Header () {
 
