@@ -8,8 +8,6 @@ export default function Service () {
         text='Our services include'
       />
       <ServiceCards/>
-
-
     </section>
   )
 }

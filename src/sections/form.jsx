@@ -1,14 +1,14 @@
 import Subtitle from "../components/subtitle"
-import TransportType from "../components/transport-type"
+import TransportTypes from "../components/transport-types"
 
 export default function Form () {
   return (
-    <section className="buy-form">
+    <section className="buy-form container">
       <Subtitle 
         text='Transportation Options'
       />
   
-      <TransportType />
+      <TransportTypes />
     </section>
   )
 }
