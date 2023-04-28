@@ -33,4 +33,6 @@ TransportType.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  handleUpdateType: PropTypes.func.isRequired,
+  activeTransportType: PropTypes.string.isRequired,
 }
