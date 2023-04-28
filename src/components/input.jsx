@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export default function Input ({label, placeholder="", type, name, value="", handleUpdate}) {
+export default function Input ({label, placeholder="", type, name, value, handleUpdate}) {
   return (
     <label className='w-full py-2'>
       <span className='text-lg'>{label}</span>
@@ -14,6 +14,6 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
   handleUpdate: PropTypes.func.isRequired,
 }
