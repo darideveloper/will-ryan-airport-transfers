@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 
-export default function TransportType ({id, text, price, handleUpdateType, activeTransportType, initialActive}) {
+export default function TransportType ({id, text, price, handleUpdateType, transportType, initialActive}) {
 
   function handleChange (e) {
     // Submit activate checked to parent
@@ -23,7 +23,7 @@ export default function TransportType ({id, text, price, handleUpdateType, activ
 
           <div className="box border-2 w-14 h-8 border-blue flex items-center justify-center">
             {/* Activate this div when selected */}
-            <div className="inside bg-blue w-8 h-4" style={{display: activeTransportType == id ? "block" : "none"}}></div>
+            <div className="inside bg-blue w-8 h-4" style={{display: transportType == id ? "block" : "none"}}></div>
           </div>
 
           <div className="text ms-5 w-full block">
@@ -33,7 +33,7 @@ export default function TransportType ({id, text, price, handleUpdateType, activ
 
         </label>
         
-        <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}} checked={activeTransportType == id ? true : false} />
+        <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}} checked={transportType == id ? true : false} />
         
       </div>
     </div>
@@ -45,6 +45,6 @@ TransportType.propTypes = {
   text: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   handleUpdateType: PropTypes.func.isRequired,
-  activeTransportType: PropTypes.string.isRequired,
+  transportType: PropTypes.string.isRequired,
   initialActive: PropTypes.bool.isRequired,
 }

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Subtitle from "../components/subtitle"
 import TransportTypes from "../components/transport-types"
 import Input from "../components/input"
@@ -6,6 +7,66 @@ import Fieldset from "../components/fieldset"
 import FormText from "../components/form-text"
 
 export default function Form () {
+
+  const [activeTransportType, setActiveTransportType] = useState('Arriving')
+
+  function handleUpdateType (id) {
+    // Update active transport type
+    setActiveTransportType (id)
+  }
+
+
+  function getArraivingDepartingForm () {
+    // Generate arraiving and departing forms
+    
+    // Identify active transport type
+    const activeForms = activeTransportType.split (",")
+
+    const fieldsets = []
+    for (let title of activeForms) {
+      let direction = "in"
+      if (title == "Departing") {
+        direction = "from"
+      }
+
+      fieldsets.push (
+        <Fieldset title={title} key={title}>
+          <legend className="title text-xl uppercase mb-3"></legend>
+          <Input
+            label={`${title} date`}
+            type='date'
+            name={`${title.toLowerCase()}-date`}
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label={`${title} time ${direction} Cancun`}
+            type='time'
+            name={`${title.toLowerCase()}-time`}
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label='Airline'
+            type='text'
+            name='airline'
+            placeholder="Enter your airline"
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label='Flight number'
+            type='text'
+            name='flight'
+            placeholder="Enter your flight number"
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <FormText 
+            text={`*In case you have connecting flights, please make sure you provide the info for your actual flight ${title.toLowerCase()} ${direction} Cancun`}
+          />
+        </Fieldset>
+      )
+    }
+
+    return fieldsets
+  }
 
   // Generate passager options
   const maxPassenger = 8
@@ -18,7 +79,7 @@ export default function Form () {
     passengers.push ({"value": `${passengerNum}`, "label": label})
   }
 
-  // Get hotels
+  // Get hotels from api
   const hotels = [
     "sample a",
     "sample b",
@@ -32,7 +93,10 @@ export default function Form () {
       />
   
       <form action="." method="post" className="mx-auto">
-        <TransportTypes />
+        <TransportTypes 
+          handleUpdateType={handleUpdateType}
+          activeTransportType={activeTransportType}
+        />
 
         <Fieldset title='General'>
           <legend className="title text-xl uppercase mb-3"></legend>
@@ -69,38 +133,9 @@ export default function Form () {
           />
         </Fieldset>
 
-        <Fieldset title='Arraiving'>
-          <legend className="title text-xl uppercase mb-3"></legend>
-          <Input
-            label='Arriving date'
-            type='date'
-            name='arriving-date'
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <Input
-            label='Arriving time in Cancun'
-            type='time'
-            name='arriving-date'
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <Input
-            label='Airline'
-            type='text'
-            name='arriving-date'
-            placeholder="Enter your airline"
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <Input
-            label='Flight number'
-            type='text'
-            name='flight-number'
-            placeholder="Enter your flight number"
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <FormText 
-            text="*In case you have connecting flights, please make sure you provide the info for your actual flight arriving to Cancun"
-          />
-        </Fieldset>
+        {getArraivingDepartingForm()}
+
+        
       </form>
     </section>
   )
