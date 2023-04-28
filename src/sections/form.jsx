@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Subtitle from "../components/subtitle"
 import TransportTypes from "../components/transport-types"
 import Input from "../components/input"
@@ -9,11 +9,28 @@ import FormText from "../components/form-text"
 export default function Form () {
 
   const [activeTransportType, setActiveTransportType] = useState('Arriving')
+  const [mediaQuery, setMediaQuery] = useState(false)
 
   function handleUpdateType (id) {
     // Update active transport type
     setActiveTransportType (id)
   }
+
+  function handleResize () {
+    const mediaQuery = window.matchMedia ('(max-width: 768px)')
+    setMediaQuery (mediaQuery.matches)
+  }
+
+  useEffect (() => {
+    // Detect when resize screen and update media query status
+    window.addEventListener ('resize', () => {
+      handleResize ()      
+    })
+
+    // Handle when loads
+    handleResize ()
+
+  }, [])
 
 
   function getArraivingDepartingForm () {
@@ -81,9 +98,9 @@ export default function Form () {
 
   // Get hotels from api
   const hotels = [
-    "sample a",
-    "sample b",
-    "sample c"
+    {value: "sample a", label: "sample a"},
+    {value: "sample b", label: "sample b"},
+    {value: "sample c", label: "sample c"},
   ]
 
   return (
@@ -98,42 +115,45 @@ export default function Form () {
           activeTransportType={activeTransportType}
         />
 
-        <Fieldset title='General'>
-          <legend className="title text-xl uppercase mb-3"></legend>
-          <Input 
-            label='Name'
-            placeholder='Enter your name'
-            type='text'
-            name='name'
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <Input 
-            label='Last name'
-            placeholder='Enter your last name'
-            type='text'
-            name='last-name'
-            handleUpdate={(e) => console.log (e.target.value)}
-          />
-          <Select 
-            label='Number of passengers'
-            name='passengers'
-            handleUpdate={(e) => console.log (e.target.value)}
-            options={passengers}
-            activeOption="2"
-          />
-          <FormText 
-            text="Maximum eight passengers per van"
-          />
-          <Select 
-            label='Hotel'
-            name='hotel'
-            handleUpdate={(e) => console.log (e.target.value)}
-            options={passengers}
-            activeOption="sample a"
-          />
-        </Fieldset>
+        <div className="fields w-5/6 mx-auto grid gap-10" style={{gridTemplateColumns: mediaQuery ? "repeat(1, 1fr)" : activeTransportType == "Arriving,Departing" ? "repeat(3, 1fr)" : "repeat(2, 1fr)"}}>
+          <Fieldset title='General'>
+            <legend className="title text-xl uppercase mb-3"></legend>
+            <Input 
+              label='Name'
+              placeholder='Enter your name'
+              type='text'
+              name='name'
+              handleUpdate={(e) => console.log (e.target.value)}
+            />
+            <Input 
+              label='Last name'
+              placeholder='Enter your last name'
+              type='text'
+              name='last-name'
+              handleUpdate={(e) => console.log (e.target.value)}
+            />
+            <Select 
+              label='Number of passengers'
+              name='passengers'
+              handleUpdate={(e) => console.log (e.target.value)}
+              options={passengers}
+              activeOption="2"
+            />
+            <FormText 
+              text="Maximum eight passengers per van"
+            />
+            <Select 
+              label='Hotel'
+              name='hotel'
+              handleUpdate={(e) => console.log (e.target.value)}
+              options={hotels}
+              activeOption="sample a"
+            />
+          </Fieldset>
 
-        {getArraivingDepartingForm()}
+          {getArraivingDepartingForm()}
+        </div>
+
 
         
       </form>
