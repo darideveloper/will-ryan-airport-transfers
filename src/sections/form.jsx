@@ -8,7 +8,9 @@ export default function Form () {
         text='Transportation Options'
       />
   
-      <TransportTypes />
+      <form action="." method="post">
+        <TransportTypes />
+      </form>
     </section>
   )
 }
