@@ -1,11 +1,19 @@
 import PropTypes from 'prop-types'
+import { useEffect } from 'react'
 
-export default function TransportType ({id, text, price, handleUpdateType, activeTransportType}) {
+export default function TransportType ({id, text, price, handleUpdateType, activeTransportType, initialActive}) {
 
   function handleChange (e) {
     // Submit activate checked to parent
     handleUpdateType (id)
   }
+
+  // active components with initialActive when loads
+  useEffect(() => {
+    if (initialActive) {
+      handleUpdateType (id)
+    }
+  }, [])
 
   return (
     <div className="transport-type">
@@ -23,7 +31,7 @@ export default function TransportType ({id, text, price, handleUpdateType, activ
           </div>
 
         </label>
-        <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}}/>
+        <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}} checked={activeTransportType == id ? true : false} />
       </div>
     </div>
   )
@@ -35,4 +43,5 @@ TransportType.propTypes = {
   price: PropTypes.string.isRequired,
   handleUpdateType: PropTypes.func.isRequired,
   activeTransportType: PropTypes.string.isRequired,
+  initialActive: PropTypes.bool.isRequired,
 }
