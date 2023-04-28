@@ -3,6 +3,7 @@ import TransportTypes from "../components/transport-types"
 import Input from "../components/input"
 import Select from "../components/select"
 import Fieldset from "../components/fieldset"
+import FormText from "../components/form-text"
 
 export default function Form () {
 
@@ -56,13 +57,48 @@ export default function Form () {
             options={passengers}
             activeOption="2"
           />
-          <p className="text-left block w-full text-sm">Maximum eight passengers per van</p>
+          <FormText 
+            text="Maximum eight passengers per van"
+          />
           <Select 
             label='Hotel'
             name='hotel'
             handleUpdate={(e) => console.log (e.target.value)}
             options={passengers}
             activeOption="sample a"
+          />
+        </Fieldset>
+
+        <Fieldset title='Arraiving'>
+          <legend className="title text-xl uppercase mb-3"></legend>
+          <Input
+            label='Arriving date'
+            type='date'
+            name='arriving-date'
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label='Arriving time in Cancun'
+            type='time'
+            name='arriving-date'
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label='Airline'
+            type='text'
+            name='arriving-date'
+            placeholder="Enter your airline"
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <Input
+            label='Flight number'
+            type='text'
+            name='flight-number'
+            placeholder="Enter your flight number"
+            handleUpdate={(e) => console.log (e.target.value)}
+          />
+          <FormText 
+            text="*In case you have connecting flights, please make sure you provide the info for your actual flight arriving to Cancun"
           />
         </Fieldset>
       </form>

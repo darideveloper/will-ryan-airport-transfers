@@ -4,7 +4,7 @@ export default function Select ({label, activeOption="", name, handleUpdate, opt
   return (
     <label className='w-full py-2'>
       <span className='text-lg'>{label}</span>
-      <select name={name} defaultValue={activeOption} onChange={(e) => handleUpdate(e)} className='block border-2 w-full px-5 py-2 mt-2 border-blue rounded-lg transition duration-300 opacity-60 focus:shadow-lg focus:opacity-100'>
+      <select name={name} defaultValue={activeOption} onChange={(e) => handleUpdate(e)} className='block border-2 w-full px-5 h-12 mt-2 border-blue rounded-lg transition duration-300 opacity-60 focus:shadow-lg focus:opacity-100'>
         {options.map(({value, label}) => (
           // Select activeOption if it matches the current value
           <option value={value} key={value}>{label}</option>
