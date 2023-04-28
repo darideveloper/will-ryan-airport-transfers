@@ -19,10 +19,10 @@ export default function TransportType ({id, text, price, handleUpdateType, activ
     <div className="transport-type">
 
       <div className="checkbox opacity-80 ms-3">
-        <label htmlFor={id} className='flex items-center justify-start my-10 md:justify-center'>
+        <label htmlFor={id} className='flex items-center justify-start mb-10 md:justify-center'>
 
           <div className="box border-2 w-14 h-8 border-blue flex items-center justify-center">
-            {/* Actiuvate this div when selected */}
+            {/* Activate this div when selected */}
             <div className="inside bg-blue w-8 h-4" style={{display: activeTransportType == id ? "block" : "none"}}></div>
           </div>
 
