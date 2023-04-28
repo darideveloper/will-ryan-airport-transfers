@@ -20,18 +20,21 @@ export default function TransportType ({id, text, price, handleUpdateType, activ
 
       <div className="checkbox opacity-80 ms-3">
         <label htmlFor={id} className='flex items-center justify-start my-10 md:justify-center'>
+
           <div className="box border-2 w-14 h-8 border-blue flex items-center justify-center">
             {/* Actiuvate this div when selected */}
-            <div className="inside bg-blue w-10 h-4" style={{display: activeTransportType == id ? "block" : "none"}}></div>
+            <div className="inside bg-blue w-8 h-4" style={{display: activeTransportType == id ? "block" : "none"}}></div>
           </div>
 
-          <div className="text ms-5">
+          <div className="text ms-5 w-full block">
             <h3 className='uppercase text-xl'>{text}</h3>
             <span className="price text-gold font-bold text-2xl">{price}</span>
           </div>
 
         </label>
+        
         <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}} checked={activeTransportType == id ? true : false} />
+        
       </div>
     </div>
   )
