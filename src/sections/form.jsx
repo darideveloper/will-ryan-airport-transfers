@@ -14,7 +14,7 @@ export default function Form () {
   const [lastName, setLastName] = useState('')
   const [passengers, setPassengers] = useState('1')
   const [hotel, setHotel] = useState('')
-  const [hotels, setHotels] = useState('')
+  const [hotels, setHotels] = useState([])
   const [arrivingDate, setArrivingDate] = useState('')
   const [arrivingTime, setArrivingTime] = useState('')
   const [arrivingAirline, setArrivingAirline] = useState('')
@@ -173,9 +173,10 @@ export default function Form () {
           </Fieldset>
 
           {getArraivingDepartingForm()}
+
         </div>
 
-
+        <input type="submit" value="Buy Now" className="w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
         
       </form>
     </section>
