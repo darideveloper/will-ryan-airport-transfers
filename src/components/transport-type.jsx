@@ -33,7 +33,7 @@ export default function TransportType ({id, text, price, handleUpdateType, trans
 
         </label>
         
-        <input type="radio" name="transport-type" className='hidden' id={id} onChange={(e) => {handleChange (e)}} checked={transportType == id ? true : false} />
+        <input type="radio" name="transport-type" className='hidden no-collect' id={id} onChange={(e) => {handleChange (e)}} checked={transportType == id ? true : false} />
         
       </div>
     </div>

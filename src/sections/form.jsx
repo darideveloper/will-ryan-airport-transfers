@@ -6,9 +6,12 @@ import Select from "../components/select"
 import Fieldset from "../components/fieldset"
 import FormText from "../components/form-text"
 import { getHotels } from "../api/hotels"
+import { submitStripe } from "../api/stripe"
+import { getTransports } from "../api/transports"  
 
 export default function Form () {
 
+  const [transports, setTransports] = useState([])
   const [activeTransportType, setActiveTransportType] = useState('Arriving')
   const [mediaQuery, setMediaQuery] = useState(false)
   const [name, setName] = useState('')
@@ -35,6 +38,20 @@ export default function Form () {
     setMediaQuery (mediaQuery.matches)
   }
 
+  function handleSubmit (e) {
+
+    // Don't submit form
+    e.preventDefault ()
+
+    // Get current service price and name
+    const currentService = transports.find (transport => transport.id == activeTransportType)
+    const serviceName = currentService.text
+    const servicePrice = parseFloat(currentService.price)
+
+    // Submit to stripe
+    submitStripe (activeTransportType, serviceName, servicePrice)
+  }
+
   useEffect (() => {
     // Detect when resize screen and update media query status
     window.addEventListener ('resize', () => {
@@ -47,6 +64,10 @@ export default function Form () {
     // Load api data when mounts
     getHotels().then (apiHotels => {
       setHotels(apiHotels)
+    })
+
+    getTransports ().then (apiTransports => {
+      setTransports (apiTransports)
     })
 
   }, [])
@@ -127,10 +148,11 @@ export default function Form () {
         text='Transportation Options'
       />
   
-      <form action="." method="post" className="mx-auto">
+      <form action="." method="post" className="mx-auto" onSubmit={e => {handleSubmit(e)}}>
         <TransportTypes 
           handleUpdateType={handleUpdateType}
           activeTransportType={activeTransportType}
+          transports={transports}
         />
 
         <div className="fields w-5/6 mx-auto grid gap-10" style={{gridTemplateColumns: mediaQuery ? "repeat(1, 1fr)" : activeTransportType == "Arriving,Departing" ? "repeat(3, 1fr)" : "repeat(2, 1fr)"}}>
@@ -175,7 +197,7 @@ export default function Form () {
 
         </div>
 
-        <input type="submit" value="Buy Now" className="w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
+        <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
         
       </form>
     </section>
