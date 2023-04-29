@@ -23,7 +23,7 @@ export default function Menu ({menuItems}) {
         <ul className="flex flex-col items-center justify-center sm:flex-row">
           {menuItems.map(({text, link}, index) => {
             return (<li key={index}>
-              <a href={link} className="py-5 block text-lg text-center text-white opacity-80 uppercase sm:px-5">{text}</a>
+              <a href={link} className="py-5 block text-lg text-center text-white opacity-80 uppercase sm:px-5 hover:text-gold hover:opacity-100">{text}</a>
             </li>)
           })}
         </ul>
