@@ -5,6 +5,7 @@ import Input from "../components/input"
 import Select from "../components/select"
 import Fieldset from "../components/fieldset"
 import FormText from "../components/form-text"
+import { getHotels } from "../api/hotels"
 
 export default function Form () {
 
@@ -41,14 +42,12 @@ export default function Form () {
     })
 
     // Handle when loads
-    handleResize ()
+    handleResize (handleResize())
 
-    // TODO: Get hotels from api
-    setHotels([
-      {value: "sample a", label: "sample a"},
-      {value: "sample b", label: "sample b"},
-      {value: "sample c", label: "sample c"},
-    ])
+    // Load api data when mounts
+    getHotels().then (apiHotels => {
+      setHotels(apiHotels)
+    })
 
   }, [])
 
