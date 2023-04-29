@@ -5,7 +5,14 @@ export const LoadContext = createContext()
 export function LoadContextProvider ({children}) {
 
   // loading status
-  const [loading, setLoading] = useState (false)
+  const [loading, setLoading] = useState (true)
+
+  // Disable loading 1 second after page load
+  useEffect (() => {
+    setTimeout (() => {
+      setLoading (false)
+    }, 1000)
+  }, [])
 
   useEffect (() => {
     // apply styles to body
