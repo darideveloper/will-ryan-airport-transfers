@@ -25,7 +25,7 @@ export default function Menu () {
   return (
     <div className="menu sm:mt-8 lg:mt-0">
       
-      <nav className="overflow-hidden transition-all duration-500 sm:!h-auto" style={{"height": menuOpen ? "250px" : "0px"}}>
+      <nav className="overflow-hidden transition-all duration-500 sm:!h-auto" style={{"height": menuOpen ? "200px" : "0px"}}>
         <ul className="flex flex-col items-center justify-center sm:flex-row">
           {menuItems.map(({text, link, blank}, index) => {
             return (<li key={index}>
