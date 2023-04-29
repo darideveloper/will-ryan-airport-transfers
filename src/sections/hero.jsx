@@ -24,7 +24,7 @@ export default function Hero () {
           </h2>
         </div>
 
-        <img src="/imgs/hero.png" alt="transport image" className="w-full"/>
+        <img src="./imgs/hero.png" alt="transport image" className="w-full"/>
       </div>
     </section>
   )
