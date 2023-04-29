@@ -15,7 +15,7 @@ export function LoadContextProvider ({children}) {
       loadElem.classList.remove ('-z-10')      
     } else {
       loadElem.classList.add ('opacity-0')
-      loadElem.classList.add ('-z-10')      
+      loadElem.classList.add ('!-z-10')      
     }
 
   }, [loading])
