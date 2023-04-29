@@ -9,7 +9,12 @@ import { getHotels } from "../api/hotels"
 import { submitStripe } from "../api/stripe"
 import { getTransports } from "../api/transports"  
 
+import LoadContext from '../context/load'
+import { useContext } from 'react'
+
 export default function Form () {
+
+  const { loading, setLoading } = useContext(LoadContext)
 
   const [transports, setTransports] = useState([])
   const [activeTransportType, setActiveTransportType] = useState('Arriving')
@@ -49,7 +54,7 @@ export default function Form () {
     const servicePrice = parseFloat(currentService.price)
 
     // Submit to stripe
-    submitStripe (activeTransportType, serviceName, servicePrice)
+    submitStripe (activeTransportType, serviceName, servicePrice, loading, setLoading)
   }
 
   useEffect (() => {

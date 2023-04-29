@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 const stripeApi = "https://stripe-api-flask.herokuapp.com/"
+const stripeUser = "cancunconcier"
 
 function alertError() {
   // Alert error for api call
@@ -13,17 +14,10 @@ function alertError() {
   })
 }
 
-function toggleLoading() {
-  // Hide and show loading modal
-  const modal = document.querySelector(".loading-modal")
-  // modal.classList.toggle ("hide")
-}
+export async function submitStripe(activeTransportType, serviceName, servicePrice, loading, setLoading) {
 
-export async function submitStripe(activeTransportType, serviceName, servicePrice) {
-
-  console.log(activeTransportType)
-
-  // toggleLoading()
+  // Toggle loading status
+  setLoading(!loading)
 
   // Get service data
   const serviceAmount = 1
@@ -33,7 +27,7 @@ export async function submitStripe(activeTransportType, serviceName, servicePric
   inputs.forEach(input => {
     let name = input.name.charAt(0).toUpperCase() + input.name.slice(1)
     name = name.replace("-", " ")
-    const value = input.value 
+    const value = input.value
     inputsData.push(`${name}: ${value}`)
   })
   const serviceDescription = inputsData.join(", ")
@@ -48,31 +42,33 @@ export async function submitStripe(activeTransportType, serviceName, servicePric
   }
 
   try {
-      const response = await fetch (stripeApi, {
-          method: 'POST',
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              "user": "cancunconcier",
-              "url": window.location.href,
-              "products": serviceData
-          }),
-          mode: "cors",
-      })
-      const response_json = await response.json ()
+    const response = await fetch(stripeApi, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "user": stripeUser,
+        "url": window.location.href,
+        "products": serviceData
+      }),
+      mode: "cors",
+    })
+    const response_json = await response.json()
 
-      // Validate api response for redirect
-      if (Object.keys(response_json).includes ("stripe_url")) {
-          window.location.href = response_json.stripe_url
-      } else {
-          alertError ()
-      }
+    // // Validate api response for redirect
+    if (Object.keys(response_json).includes("stripe_url")) {
+      window.location.href = response_json.stripe_url
+    } else {
+      alertError()
+    }
   } catch (error) {
-    console.log (error)
-      alertError ()
-      // toggleLoading ()
+    console.log(error)
+    alertError()
+
+    // Toggle loading status
+    setLoading(!loading)
   }
 
 }
