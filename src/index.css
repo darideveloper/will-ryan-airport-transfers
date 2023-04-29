@@ -3,6 +3,7 @@
   --black: #1a1a1a;
   --white: #ffffff;
   --gold: #C8B568;
+  --gold-trans: #c8b568b6;
 }
 
 html {
@@ -29,8 +30,27 @@ p, h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
+/* Disble inputs outline */
 *:focus {
   outline: none; 
+}
+
+/* Custom scroll bar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  margin-top: -5px
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-trans);
 }
 
 @tailwind base;
