@@ -1,9 +1,10 @@
-import {useState, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
+import { getMenu } from '../api/menu'
 
-export default function Menu ({menuItems}) {
+export default function Menu () {
   
   const [menuOpen, setMenuOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState([])
 
   function handleResize () {
     // Update open or close menu state when window is resized, based on media query
@@ -13,6 +14,11 @@ export default function Menu ({menuItems}) {
   useEffect(() => {
     // handle resize on load
     window.addEventListener ("resize", handleResize)
+
+    // get menu items from api
+    getMenu().then((menuItems) => {
+      setMenuItems(menuItems)
+    })
   }, [])
 
 
@@ -21,9 +27,13 @@ export default function Menu ({menuItems}) {
       
       <nav className="overflow-hidden transition-all duration-500 sm:!h-auto" style={{"height": menuOpen ? "250px" : "0px"}}>
         <ul className="flex flex-col items-center justify-center sm:flex-row">
-          {menuItems.map(({text, link}, index) => {
+          {menuItems.map(({text, link, blank}, index) => {
             return (<li key={index}>
-              <a href={link} className="py-5 block text-lg text-center text-white opacity-80 uppercase sm:px-5 hover:text-gold hover:opacity-100">{text}</a>
+              <a 
+                href={link} 
+                className="py-5 block text-lg text-center text-white opacity-80 uppercase sm:px-5 hover:text-gold hover:opacity-100"
+                target={blank ? "_blank" : "_self"}
+                >{text}</a>
             </li>)
           })}
         </ul>
@@ -37,11 +47,4 @@ export default function Menu ({menuItems}) {
 
     </div>
   )
-}
-
-Menu.propTypes = {
-  menuItems: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-  })).isRequired,
 }

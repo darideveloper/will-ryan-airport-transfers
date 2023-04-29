@@ -3,7 +3,7 @@ import ContactCard from "../components/contact-card"
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-blue mt-48">
+    <footer className="w-full bg-blue mt-48" id="footer">
 
       <div className="go-top-wrapper w-full relative">
         <a href="#header" className="go-top flex items-center justify-center flex-col bg-white w-16 h-16 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-black drop-shadow-lg duration-500 hover:scale-110" >

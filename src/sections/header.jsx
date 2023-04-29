@@ -12,15 +12,7 @@ export default function Header () {
           alt='cancun concierge logo'
           width='160px'
         />
-        <Menu
-          menuItems={[
-            {text: "Home", link: "https://cancunconciergedmc.com/en/"},
-            {text: "Services", link: "#"},
-            {text: "Transportation", link: "#"},
-            {text: "Social Responsability", link: "#"},
-            {text: "Los Cabos", link: "#"},
-          ]}
-        />
+        <Menu/>
       </div>
     </header>
   )
