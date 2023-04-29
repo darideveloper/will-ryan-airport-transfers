@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+
 const stripeApi = "https://stripe-api-flask.herokuapp.com/"
 
 function alertError() {
@@ -68,7 +71,7 @@ export async function submitStripe(activeTransportType, serviceName, servicePric
       }
   } catch (error) {
     console.log (error)
-      // alertError ()
+      alertError ()
       // toggleLoading ()
   }
 
