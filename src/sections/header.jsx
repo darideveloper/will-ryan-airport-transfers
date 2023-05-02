@@ -8,9 +8,9 @@ export default function Header () {
       <div className="container flex flex-col items-center justify-center lg:flex-row lg:justify-between">
         
         <Logo 
-          image='logo.png'
+          image='page-logo.png'
           alt='cancun concierge logo'
-          width='160px'
+          width='60px'
         />
         <Menu/>
       </div>
