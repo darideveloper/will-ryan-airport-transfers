@@ -1,8 +1,9 @@
 export async function getHotels () {
   // TODO: get hotels drom API
   return [
-    {value: "sample 1", label: "sample 1"},
-    {value: "sample 2", label: "sample 2"},
-    {value: "sample 3", label: "sample 3"},
+    {value: 'Airbnb', label: 'Airbnb'},
+    {value: "Hotel 1", label: "Hotel 1"},
+    {value: "Hotel 2", label: "Hotel 2"},
+    {value: "Hotel 3", label: "Hotel 3"},
   ]
 }

@@ -22,7 +22,10 @@ export default function Form () {
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [passengers, setPassengers] = useState('1')
-  const [hotel, setHotel] = useState('')
+  const [hotel, setHotel] = useState('Airbnb')
+  const [airbnbType, setAirbnbType] = useState('Address')
+  const [airbnbAddress, setAirbnbAddress] = useState('')
+  const [airbnbMunicipality, setAirbnbMunicipality] = useState('')
   const [hotels, setHotels] = useState([])
   const [arrivingDate, setArrivingDate] = useState('')
   const [arrivingTime, setArrivingTime] = useState('')
@@ -190,12 +193,62 @@ export default function Form () {
               text="Maximum eight passengers per van"
             />
             <Select 
-              label='Hotel'
-              name='hotel'
+              label='Hotel or Airbnb'
+              name='hotel-airbnb'
               handleUpdate={(e) => setHotel (e.target.value)}
               options={hotels}
               activeOption={hotel}
             />
+
+            {/* Render Airbnb type when Airbnb active */}
+            {
+              (hotel == 'Airbnb') 
+              &&
+              <Select 
+                label='Airbnb type'
+                name='airbnb-type'
+                handleUpdate={(e) => setAirbnbType (e.target.value)}
+                options={[
+                  {value: 'Municipality', label: 'Municipality'},
+                  {value: "Address", label: "Address"}
+                ]}
+                activeOption={airbnbType}
+              />
+            }
+
+            {/* Render address input or select for airbnbType */}
+            {
+              (hotel == 'Airbnb')
+              &&
+              (airbnbType == "Address")
+              ? 
+              <Input 
+                label='Airbnb address'
+                placeholder='Enter your Airbnb address'
+                type='text'
+                name='airbnb-address'
+                handleUpdate={(e) => setAirbnbAddress (e.target.value)}
+                value={airbnbAddress}
+              />
+              :
+              <Select 
+                label='Airbnb municipality'
+                name='airbnb-municipality'
+                handleUpdate={(e) => setAirbnbMunicipality (e.target.value)}
+                options={[
+                  {value: 'Costa Mujeres', label: 'Costa Mujeres'},
+                  {value: 'Cancun', label: 'Cancun'},
+                  {value: 'Puerto Morelos', label: 'Puerto Morelos'},
+                  {value: 'Playa del Carmen', label: 'Playa del Carmen'},
+                  {value: 'Puerto Aventuras', label: 'Puerto Aventuras'},
+                  {value: 'Tulum Downtown', label: 'Tulum Downtown'},
+                  {value: 'Tulum Hotel Zone', label: 'Tulum Hotel Zone'},
+
+                ]}
+                activeOption={airbnbMunicipality}
+              />
+            }
+
           </Fieldset>
 
           {getArraivingDepartingForm()}
