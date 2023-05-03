@@ -285,7 +285,7 @@ export default function Form () {
         <p className="total text-center text-2xl w-fulll block mt-10">
           Total
           <span className="px-2 font-bold">
-            {total}.00
+            {total}.00 USD
           </span>
         </p>
         <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
