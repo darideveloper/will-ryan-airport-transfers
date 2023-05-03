@@ -1,14 +1,21 @@
+// react
 import { useState, useEffect } from "react"
+
+// Components
 import Subtitle from "../components/subtitle"
 import TransportTypes from "../components/transport-types"
 import Input from "../components/input"
 import Select from "../components/select"
 import Fieldset from "../components/fieldset"
 import FormText from "../components/form-text"
+
+// Api
 import { getHotels } from "../api/hotels"
 import { submitStripe } from "../api/stripe"
 import { getTransports } from "../api/transports"  
+import { getAirbnbMunicipalities } from "../api/airbnb-municipality"
 
+// Context
 import LoadContext from '../context/load'
 import { useContext } from 'react'
 
@@ -18,15 +25,18 @@ export default function Form () {
 
   const [transports, setTransports] = useState([])
   const [activeTransportType, setActiveTransportType] = useState('Arriving')
+  const [activeTransportPrice, setActiveTransportPrice] = useState(0)
   const [mediaQuery, setMediaQuery] = useState(false)
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [passengers, setPassengers] = useState('1')
-  const [hotel, setHotel] = useState('Airbnb')
+  const [hotel, setHotel] = useState('')
+  const [hotels, setHotels] = useState([])
   const [airbnbType, setAirbnbType] = useState('Address')
   const [airbnbAddress, setAirbnbAddress] = useState('')
   const [airbnbMunicipality, setAirbnbMunicipality] = useState('')
-  const [hotels, setHotels] = useState([])
+  const [airbnbMunicipalities, setAirbnbMunicipalities] = useState([])
+  const [airbnbMunicipalityPrice, setAirbnbMunicipalityPrice] = useState(0)
   const [arrivingDate, setArrivingDate] = useState('')
   const [arrivingTime, setArrivingTime] = useState('')
   const [arrivingAirline, setArrivingAirline] = useState('')
@@ -35,6 +45,7 @@ export default function Form () {
   const [departingTime, setDepartingTime] = useState('')
   const [departingAirline, setDepartingAirline] = useState('')
   const [departingFlight, setDepartingFlight] = useState('')
+  const [total, setTotal] = useState(0)
 
   function handleUpdateType (id) {
     // Update active transport type
@@ -54,10 +65,9 @@ export default function Form () {
     // Get current service price and name
     const currentService = transports.find (transport => transport.id == activeTransportType)
     const serviceName = currentService.text
-    const servicePrice = parseFloat(currentService.price)
 
     // Submit to stripe
-    submitStripe (activeTransportType, serviceName, servicePrice, loading, setLoading)
+    submitStripe (activeTransportType, serviceName, total, loading, setLoading)
   }
 
   useEffect (() => {
@@ -72,13 +82,25 @@ export default function Form () {
     // Load api data when mounts
     getHotels().then (apiHotels => {
       setHotels(apiHotels)
+      setHotel (apiHotels[0].value)
     })
 
     getTransports ().then (apiTransports => {
       setTransports (apiTransports)
+      setActiveTransportPrice (apiTransports[0].price)
+      setTotal (apiTransports[0].price)
+    })
+
+    getAirbnbMunicipalities ().then (apiAirbnbMunicipalities => {
+      setAirbnbMunicipalities (apiAirbnbMunicipalities)
+      setAirbnbMunicipality (apiAirbnbMunicipalities[0].value)
+      setAirbnbMunicipalityPrice (apiAirbnbMunicipalities[0].price)
     })
 
   }, [])
+
+  // Renmder again when price changeº
+  useEffect (() => {}, [airbnbMunicipalityPrice])
 
 
   function getArraivingDepartingForm () {
@@ -231,22 +253,27 @@ export default function Form () {
                 value={airbnbAddress}
               />
               :
-              <Select 
-                label='Airbnb municipality'
-                name='airbnb-municipality'
-                handleUpdate={(e) => setAirbnbMunicipality (e.target.value)}
-                options={[
-                  {value: 'Costa Mujeres', label: 'Costa Mujeres'},
-                  {value: 'Cancun', label: 'Cancun'},
-                  {value: 'Puerto Morelos', label: 'Puerto Morelos'},
-                  {value: 'Playa del Carmen', label: 'Playa del Carmen'},
-                  {value: 'Puerto Aventuras', label: 'Puerto Aventuras'},
-                  {value: 'Tulum Downtown', label: 'Tulum Downtown'},
-                  {value: 'Tulum Hotel Zone', label: 'Tulum Hotel Zone'},
+              <>
+                <Select 
+                  label='Airbnb municipality'
+                  name='airbnb-municipality'
+                  handleUpdate={(e) => {
 
-                ]}
-                activeOption={airbnbMunicipality}
-              />
+                    // Update municipality data
+                    const value = e.target.value
+                    const municipality = airbnbMunicipalities.find (municipality => municipality.value == value)
+                    setAirbnbMunicipality (value)
+                    setAirbnbMunicipalityPrice (municipality.price)
+
+                    // Update total price
+                    setTotal (activeTransportPrice + municipality.price)
+
+
+                  }}
+                  options={airbnbMunicipalities}
+                  activeOption={airbnbMunicipality}
+                />
+              </>
             }
 
           </Fieldset>
@@ -255,6 +282,12 @@ export default function Form () {
 
         </div>
 
+        <p className="total text-center text-2xl w-fulll block mt-10">
+          Total
+          <span className="px-2 font-bold">
+            {total}.00
+          </span>
+        </p>
         <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
         
       </form>

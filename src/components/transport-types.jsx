@@ -29,7 +29,7 @@ TransportTypes.propTypes = {
   transports: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     initialActive: PropTypes.bool.isRequired,
   })).isRequired,
 }

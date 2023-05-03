@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
 export default function Select ({label, activeOption="", name, handleUpdate, options}) {
+
   return (
     <label className='w-full py-2'>
       <span className='text-lg'>{label}</span>

@@ -43,7 +43,7 @@ export default function TransportType ({id, text, price, handleUpdateType, trans
 
           <div className="text ms-5 w-full block">
             <h3 className='uppercase text-xl'>{text}</h3>
-            <span className="price text-gold font-bold text-2xl">{price}</span>
+            <span className="price text-gold font-bold text-2xl">{price}.00</span>
           </div>
 
         </label>
@@ -58,7 +58,7 @@ export default function TransportType ({id, text, price, handleUpdateType, trans
 TransportType.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
   handleUpdateType: PropTypes.func.isRequired,
   transportType: PropTypes.string.isRequired,
   initialActive: PropTypes.bool.isRequired,
