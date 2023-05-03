@@ -26,8 +26,8 @@ export default function Footer() {
 
             <ContactCard
               svgPath={<path d="M22 5v14h-20v-14h20zm2-2h-24v18h24v-18zm-2 16l-6.526-6.618-3.445 3.483-3.418-3.525-6.611 6.66 5.051-8-5.051-6 10.029 7.446 9.971-7.446-4.998 6.01 4.998 7.99z" />}
-              link="mailto:info@cancunconciergedmc.com"
-              text="info@cancunconciergedmc.com"
+              link="mailto:info@rivieramayaairporttransfers.com"
+              text="info@rivieramayaairporttransfers.com"
             />
 
             <ContactCard
@@ -49,9 +49,9 @@ export default function Footer() {
           </address>
         </Widget>
 
-        <Widget title="Mexican Caribbean" extraClassName="max-w-lg sm:order-first	">
+        <Widget title="ABOUT US" extraClassName="max-w-lg sm:order-first	">
           <p className="text-white text-md">
-            At Cancun Concierge we plan and carry out airport transportation services, water activities, tours, golf, restaurant reservations and basically any need you may have during your stay in Cancun and the Riviera Maya.
+          Experience the beauty of the Mexican Caribbean with our premium transportation services. Our modern fleet of vehicles will take you to your destination in style and comfort. With our convenient online booking system, planning your transportation has never been easier. Trust us to get you to your destination safely and on time. Don't miss out on the adventure - book your transportation with us today!
           </p>
         </Widget>
       </section>
