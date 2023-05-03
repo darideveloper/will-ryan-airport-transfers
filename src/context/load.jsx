@@ -19,7 +19,7 @@ export function LoadContextProvider ({children}) {
     const loadElem = document.querySelector ('.load')
     if (loading) {
       loadElem.classList.remove ('opacity-0')
-      loadElem.classList.remove ('-z-10')      
+      loadElem.classList.remove ('!-z-10')      
     } else {
       loadElem.classList.add ('opacity-0')
       loadElem.classList.add ('!-z-10')      
