@@ -50,6 +50,11 @@ export default function Form () {
   function handleUpdateType (id) {
     // Update active transport type
     setActiveTransportType (id)
+
+    // Update ptices and totals
+    const price = transports.find (transport => transport.id == id).price
+    setActiveTransportPrice (price)
+    setTotal (price + airbnbMunicipalityPrice)
   }
 
   function handleResize () {
