@@ -51,10 +51,16 @@ export default function Form () {
     // Update active transport type
     setActiveTransportType (id)
 
-    // Update ptices and totals
+    // Save price
     const price = transports.find (transport => transport.id == id).price
     setActiveTransportPrice (price)
-    setTotal (price + airbnbMunicipalityPrice)
+
+    // Update total
+    if (airbnbType == "Municipality") {
+      setTotal (price + airbnbMunicipalityPrice)
+    } else {
+      setTotal (price)
+    }
   }
 
   function handleResize () {
@@ -222,7 +228,11 @@ export default function Form () {
             <Select 
               label='Hotel or Airbnb'
               name='hotel-airbnb'
-              handleUpdate={(e) => setHotel (e.target.value)}
+              handleUpdate={(e) => {
+                // Save hotel value
+                const value = e.target.value
+                setHotel (value)
+              }}
               options={hotels}
               activeOption={hotel}
             />
@@ -234,7 +244,24 @@ export default function Form () {
               <Select 
                 label='Airbnb type'
                 name='airbnb-type'
-                handleUpdate={(e) => setAirbnbType (e.target.value)}
+                handleUpdate={(e) => {
+                  // Save value
+                  const value = e.target.value
+                  setAirbnbType (value)
+
+                  // Get active municipality
+                  let price = airbnbMunicipalityPrice
+                  if (! airbnbMunicipalityPrice) {
+                    price = airbnbMunicipalities[0].price
+                  }
+
+                  // Update total
+                  if (value == "Municipality") {
+                    setTotal (activeTransportPrice + price)
+                  } else {
+                    setTotal (activeTransportPrice)
+                  }
+                }}
                 options={[
                   {value: 'Municipality', label: 'Municipality'},
                   {value: "Address", label: "Address"}
