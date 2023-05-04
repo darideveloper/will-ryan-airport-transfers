@@ -232,6 +232,19 @@ export default function Form () {
                 // Save hotel value
                 const value = e.target.value
                 setHotel (value)
+
+                // Get active municipality
+                let price = airbnbMunicipalityPrice
+                if (! airbnbMunicipalityPrice) {
+                  price = airbnbMunicipalities[0].price
+                }
+
+                // Update total
+                if (value == "Airbnb") {
+                  setTotal (activeTransportPrice + price)
+                } else {
+                  setTotal (activeTransportPrice)
+                }
               }}
               options={hotels}
               activeOption={hotel}
@@ -274,7 +287,7 @@ export default function Form () {
             {
               (hotel == 'Airbnb')
               &&
-              (airbnbType == "Address")
+              ((airbnbType == "Address")
               ? 
               <Input 
                 label='Airbnb address'
@@ -293,19 +306,18 @@ export default function Form () {
 
                     // Update municipality data
                     const value = e.target.value
-                    const municipality = airbnbMunicipalities.find (municipality => municipality.value == value)
                     setAirbnbMunicipality (value)
-                    setAirbnbMunicipalityPrice (municipality.price)
-
+                    
                     // Update total price
+                    const municipality = airbnbMunicipalities.find (municipality => municipality.value == value)
+                    setAirbnbMunicipalityPrice (municipality.price)
                     setTotal (activeTransportPrice + municipality.price)
-
 
                   }}
                   options={airbnbMunicipalities}
                   activeOption={airbnbMunicipality}
                 />
-              </>
+              </>)
             }
 
           </Fieldset>
