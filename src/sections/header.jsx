@@ -8,7 +8,7 @@ export default function Header () {
       <div className="container flex flex-col items-center justify-center lg:flex-row lg:justify-between">
         
         <Logo 
-          image='page-logo.png'
+          image='page-logo-trans.png'
           alt='cancun concierge logo'
           width='60px'
         />
