@@ -1,10 +1,22 @@
+import { apiBaseUrl } from "./api"
+
 export async function getTransports () {
 
-  // Todo: get transports from API
-  const transports = [
-    { id: "Arriving", text: "Airport - Hotel Transfer", price: 50, initialActive: true},
-    { id: "Departing", text: "Hotel - Airport Transfer", price: 50, initialActive: false },
-    { id: "Arriving,Departing", text: "Round Trip - Transfer", price: 137, initialActive: false },
-  ]
-  return transports
+  // Get data
+  const endpoint = `${apiBaseUrl}/transports/`
+  const response = await fetch(endpoint)
+  const transports = await response.json()
+
+  // Format data
+  const data = []
+  for (const transport of transports) {
+    const fields = transport.fields
+    data.push ({
+      id: fields.key, text: fields.name, price: fields.price, initialActive: fields.por_defecto
+    })
+  }
+
+  console.log (data)
+
+  return data
 }

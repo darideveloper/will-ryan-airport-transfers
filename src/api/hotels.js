@@ -1,9 +1,20 @@
+import { apiBaseUrl } from "./api"
+
 export async function getHotels () {
-  // TODO: get hotels drom API
-  return [
-    {value: 'Airbnb', label: 'Airbnb'},
-    {value: "Hotel 1", label: "Hotel 1"},
-    {value: "Hotel 2", label: "Hotel 2"},
-    {value: "Hotel 3", label: "Hotel 3"},
-  ]
+
+  // Get data
+  const endpoint = `${apiBaseUrl}/hotels/`
+  const response = await fetch(endpoint)
+  const hotels = await response.json()
+
+  // Format data
+  const data = []
+  for (const hotel of hotels) {
+    const fields = hotel.fields
+    data.push ({
+      value: fields.name, label: fields.name
+    })
+  }
+
+  return data
 }
