@@ -12,14 +12,14 @@ import FormText from "../components/form-text"
 // Api
 import { getHotels } from "../api/hotels"
 import { submitStripe } from "../api/stripe"
-import { getTransports } from "../api/transports"  
+import { getTransports } from "../api/transports"
 import { getAirbnbMunicipalities } from "../api/airbnb-municipality"
 
 // Context
 import LoadContext from '../context/load'
 import { useContext } from 'react'
 
-export default function Form () {
+export default function Form() {
 
   const { loading, setLoading } = useContext(LoadContext)
 
@@ -30,9 +30,8 @@ export default function Form () {
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [passengers, setPassengers] = useState('1')
-  const [hotel, setHotel] = useState('')
+  const [hotel, setHotel] = useState('Airbnb')
   const [hotels, setHotels] = useState([])
-  const [airbnbType, setAirbnbType] = useState('Address')
   const [airbnbAddress, setAirbnbAddress] = useState('')
   const [airbnbMunicipality, setAirbnbMunicipality] = useState('')
   const [airbnbMunicipalities, setAirbnbMunicipalities] = useState([])
@@ -47,78 +46,92 @@ export default function Form () {
   const [departingFlight, setDepartingFlight] = useState('')
   const [total, setTotal] = useState(0)
 
-  function handleUpdateType (id) {
-    // Update active transport type
-    setActiveTransportType (id)
-
-    // Save price
-    const price = transports.find (transport => transport.id == id).price
-    setActiveTransportPrice (price)
-
-    // Update total
-    if (airbnbType == "Municipality") {
-      setTotal (price + airbnbMunicipalityPrice)
+  function updateTotal (transport, municipality, current_hotel=hotel) {
+    // Update total based on hotel or airbnb
+    if (current_hotel == "Airbnb") {
+      setTotal(transport + municipality)
     } else {
-      setTotal (price)
+      setTotal(transport)
     }
   }
 
-  function handleResize () {
-    const mediaQuery = window.matchMedia ('(max-width: 768px)')
-    setMediaQuery (mediaQuery.matches)
+  function handleUpdateType(id) {
+    // Update active transport type
+    setActiveTransportType(id)
+
+    // Save price
+    const price = transports.find(transport => transport.id == id).price
+    setActiveTransportPrice(price)
+    
+    updateTotal (price, airbnbMunicipalityPrice)
   }
 
-  function handleSubmit (e) {
+  function handleResize() {
+    const mediaQuery = window.matchMedia('(max-width: 768px)')
+    setMediaQuery(mediaQuery.matches)
+  }
+
+  function handleSubmit(e) {
 
     // Don't submit form
-    e.preventDefault ()
+    e.preventDefault()
 
     // Get current service price and name
-    const currentService = transports.find (transport => transport.id == activeTransportType)
+    const currentService = transports.find(transport => transport.id == activeTransportType)
     const serviceName = currentService.text
 
     // Submit to stripe
-    submitStripe (activeTransportType, serviceName, total, loading, setLoading)
+    submitStripe(activeTransportType, serviceName, total, loading, setLoading)
   }
 
-  useEffect (() => {
+  useEffect(() => {
+
+    let transport, municipality
+
     // Detect when resize screen and update media query status
-    window.addEventListener ('resize', () => {
-      handleResize ()      
+    window.addEventListener('resize', () => {
+      handleResize()
     })
 
     // Handle when loads
-    handleResize (handleResize())
+    handleResize(handleResize())
 
     // Load api data when mounts
-    getHotels().then (apiHotels => {
+    getHotels().then(apiHotels => {
       setHotels(apiHotels)
-      setHotel (apiHotels[0].value)
+      setHotel(apiHotels[0].value)
     })
 
-    getTransports ().then (apiTransports => {
-      setTransports (apiTransports)
-      setActiveTransportPrice (apiTransports[0].price)
-      setTotal (apiTransports[0].price)
+    getTransports().then(apiTransports => {
+      setTransports(apiTransports)
+      transport = apiTransports[0].price
+      setActiveTransportPrice(transport)
+      setTotal(apiTransports[0].price)
+
+      getAirbnbMunicipalities().then(apiAirbnbMunicipalities => {
+        setAirbnbMunicipalities(apiAirbnbMunicipalities)
+        municipality = apiAirbnbMunicipalities[0].price
+        setAirbnbMunicipality(municipality)
+        setAirbnbMunicipalityPrice(apiAirbnbMunicipalities[0].price)
+
+        // Update total
+        updateTotal (transport, municipality)
+      })
     })
 
-    getAirbnbMunicipalities ().then (apiAirbnbMunicipalities => {
-      setAirbnbMunicipalities (apiAirbnbMunicipalities)
-      setAirbnbMunicipality (apiAirbnbMunicipalities[0].value)
-      setAirbnbMunicipalityPrice (apiAirbnbMunicipalities[0].price)
-    })
+
 
   }, [])
 
   // Renmder again when price changeº
-  useEffect (() => {}, [airbnbMunicipalityPrice])
+  useEffect(() => { }, [airbnbMunicipalityPrice])
 
 
-  function getArraivingDepartingForm () {
+  function getArraivingDepartingForm() {
     // Generate arraiving and departing forms
-    
+
     // Identify active transport type
-    const activeForms = activeTransportType.split (",")
+    const activeForms = activeTransportType.split(",")
 
     const fieldsets = []
     for (let title of activeForms) {
@@ -129,21 +142,21 @@ export default function Form () {
         direction = "from"
       }
 
-      fieldsets.push (
+      fieldsets.push(
         <Fieldset title={title} key={title}>
           <legend className="title text-xl uppercase mb-3"></legend>
           <Input
             label={`${title} date`}
             type='date'
             name={`${title.toLowerCase()}-date`}
-            handleUpdate={(e) => title == "Arriving" ? setArrivingDate (e.target.value) : setDepartingDate (e.target.value)}
+            handleUpdate={(e) => title == "Arriving" ? setArrivingDate(e.target.value) : setDepartingDate(e.target.value)}
             value={title == "Arriving" ? arrivingDate : departingDate}
           />
           <Input
             label={`${title} time ${direction} Cancun`}
             type='time'
             name={`${title.toLowerCase()}-time`}
-            handleUpdate={(e) => title == "Arriving" ? setArrivingTime (e.target.value) : setDepartingTime (e.target.value)}
+            handleUpdate={(e) => title == "Arriving" ? setArrivingTime(e.target.value) : setDepartingTime(e.target.value)}
             value={title == "Arriving" ? arrivingTime : departingTime}
           />
           <Input
@@ -151,7 +164,7 @@ export default function Form () {
             type='text'
             name='airline'
             placeholder="Enter your airline"
-            handleUpdate={(e) => title == "Arriving" ? setArrivingAirline (e.target.value) : setDepartingAirline (e.target.value)}
+            handleUpdate={(e) => title == "Arriving" ? setArrivingAirline(e.target.value) : setDepartingAirline(e.target.value)}
             value={title == "Arriving" ? arrivingAirline : departingAirline}
           />
           <Input
@@ -159,10 +172,10 @@ export default function Form () {
             type='text'
             name='flight'
             placeholder="Enter your flight number"
-            handleUpdate={(e) => title == "Arriving" ? setArrivingFlight (e.target.value) : setDepartingFlight (e.target.value)}
+            handleUpdate={(e) => title == "Arriving" ? setArrivingFlight(e.target.value) : setDepartingFlight(e.target.value)}
             value={title == "Arriving" ? arrivingFlight : departingFlight}
           />
-          <FormText 
+          <FormText
             text={`*In case you have connecting flights, please make sure you provide the info for your actual flight ${title.toLowerCase()} ${direction} Cancun`}
           />
         </Fieldset>
@@ -180,145 +193,106 @@ export default function Form () {
     if (passengerNum == 1) {
       label = `${passengerNum} passenger`
     }
-    passengersData.push ({"value": `${passengerNum}`, "label": label})
+    passengersData.push({ "value": `${passengerNum}`, "label": label })
   }
 
   return (
     <section className="buy-form container" id="buy">
-      <Subtitle 
+      <Subtitle
         text='Transportation Options'
       />
-  
-      <form action="." method="post" className="mx-auto" onSubmit={e => {handleSubmit(e)}}>
-        <TransportTypes 
+
+      <form action="." method="post" className="mx-auto" onSubmit={e => { handleSubmit(e) }}>
+        <TransportTypes
           handleUpdateType={handleUpdateType}
           activeTransportType={activeTransportType}
           transports={transports}
         />
 
-        <div className="fields w-5/6 mx-auto grid gap-10" style={{gridTemplateColumns: mediaQuery ? "repeat(1, 1fr)" : activeTransportType == "Arriving,Departing" ? "repeat(3, 1fr)" : "repeat(2, 1fr)"}}>
+        <div className="fields w-5/6 mx-auto grid gap-10" style={{ gridTemplateColumns: mediaQuery ? "repeat(1, 1fr)" : activeTransportType == "Arriving,Departing" ? "repeat(3, 1fr)" : "repeat(2, 1fr)" }}>
           <Fieldset title='General'>
             <legend className="title text-xl uppercase mb-3"></legend>
-            <Input 
+            <Input
               label='Name'
               placeholder='Enter your name'
               type='text'
               name='name'
-              handleUpdate={(e) => setName (e.target.value)}
+              handleUpdate={(e) => setName(e.target.value)}
               value={name}
             />
-            <Input 
+            <Input
               label='Last name'
               placeholder='Enter your last name'
               type='text'
               name='last-name'
-              handleUpdate={(e) => setLastName (e.target.value)}
+              handleUpdate={(e) => setLastName(e.target.value)}
               value={lastName}
             />
-            <Select 
+            <Select
               label='Number of passengers'
               name='passengers'
-              handleUpdate={(e) => setPassengers (e.target.value)}
+              handleUpdate={(e) => setPassengers(e.target.value)}
               options={passengersData}
               activeOption={passengers}
             />
-            <FormText 
+            <FormText
               text="Maximum eight passengers per van"
             />
-            <Select 
+            <Select
               label='Hotel or Airbnb'
               name='hotel-airbnb'
               handleUpdate={(e) => {
                 // Save hotel value
                 const value = e.target.value
-                setHotel (value)
+                setHotel(value)
 
                 // Get active municipality
                 let price = airbnbMunicipalityPrice
-                if (! airbnbMunicipalityPrice) {
+                if (!airbnbMunicipalityPrice) {
                   price = airbnbMunicipalities[0].price
                 }
 
                 // Update total
-                if (value == "Airbnb") {
-                  setTotal (activeTransportPrice + price)
-                } else {
-                  setTotal (activeTransportPrice)
-                }
+                console.log ({activeTransportPrice, price})
+                updateTotal (activeTransportPrice, price, value)
               }}
               options={hotels}
               activeOption={hotel}
             />
 
-            {/* Render Airbnb type when Airbnb active */}
-            {
-              (hotel == 'Airbnb') 
-              &&
-              <Select 
-                label='Airbnb type'
-                name='airbnb-type'
-                handleUpdate={(e) => {
-                  // Save value
-                  const value = e.target.value
-                  setAirbnbType (value)
-
-                  // Get active municipality
-                  let price = airbnbMunicipalityPrice
-                  if (! airbnbMunicipalityPrice) {
-                    price = airbnbMunicipalities[0].price
-                  }
-
-                  // Update total
-                  if (value == "Municipality") {
-                    setTotal (activeTransportPrice + price)
-                  } else {
-                    setTotal (activeTransportPrice)
-                  }
-                }}
-                options={[
-                  {value: 'Municipality', label: 'Municipality'},
-                  {value: "Address", label: "Address"}
-                ]}
-                activeOption={airbnbType}
-              />
-            }
-
             {/* Render address input or select for airbnbType */}
             {
-              (hotel == 'Airbnb')
-              &&
-              ((airbnbType == "Address")
-              ? 
-              <Input 
-                label='Airbnb address'
-                placeholder='Enter your Airbnb address'
-                type='text'
-                name='airbnb-address'
-                handleUpdate={(e) => setAirbnbAddress (e.target.value)}
-                value={airbnbAddress}
-              />
-              :
+              (hotel == 'Airbnb') &&
               <>
-                <Select 
-                  label='Airbnb municipality'
+                <Select
+                  label='Resort destination'
                   name='airbnb-municipality'
                   handleUpdate={(e) => {
 
                     // Update municipality data
                     const value = e.target.value
-                    setAirbnbMunicipality (value)
-                    
+                    setAirbnbMunicipality(value)
+
                     // Update total price
-                    const municipality = airbnbMunicipalities.find (municipality => municipality.value == value)
-                    setAirbnbMunicipalityPrice (municipality.price)
-                    setTotal (activeTransportPrice + municipality.price)
+                    const municipality = airbnbMunicipalities.find(municipality => municipality.value == value)
+                    setAirbnbMunicipalityPrice(municipality.price)
+                    updateTotal (activeTransportPrice, municipality.price)
 
                   }}
                   options={airbnbMunicipalities}
                   activeOption={airbnbMunicipality}
                 />
-              </>)
+                <Input
+                  label='Airbnb address'
+                  placeholder='Enter your Airbnb address'
+                  type='text'
+                  name='airbnb-address'
+                  handleUpdate={(e) => setAirbnbAddress(e.target.value)}
+                  value={airbnbAddress}
+                />
+              </>
             }
+
 
           </Fieldset>
 
@@ -332,8 +306,8 @@ export default function Form () {
             {total}.00 USD
           </span>
         </p>
-        <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue"/>
-        
+        <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue" />
+
       </form>
     </section>
   )
