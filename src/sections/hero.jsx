@@ -3,12 +3,7 @@ import Logo from '../components/logo'
 export default function Hero () {
   return (
     <section className="hero">
-      <div className="wrapper-logo mx-auto my-10">
-        <Logo 
-          image='page-logo.png'
-          alt='cancun concierge logo'
-          width='250px'
-        />
+      <div className="wrapper-logo mx-auto my-0">
       </div>
 
       <div className="hero-image relative">
