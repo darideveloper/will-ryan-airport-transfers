@@ -16,7 +16,5 @@ export async function getTransports () {
     })
   }
 
-  console.log (data)
-
   return data
 }

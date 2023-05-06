@@ -64,7 +64,6 @@ export async function submitStripe(activeTransportType, serviceName, servicePric
       alertError()
     }
   } catch (error) {
-    console.log(error)
     alertError()
 
     // Toggle loading status
