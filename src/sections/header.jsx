@@ -10,7 +10,7 @@ export default function Header () {
         <Logo 
           image='page-logo-trans.png'
           alt='cancun concierge logo'
-          width='60px'
+          width='100px'
         />
         <Menu/>
       </div>
