@@ -49,7 +49,7 @@ export default function Footer() {
           </address>
         </Widget>
 
-        <Widget title="ABOUT US" extraClassName="max-w-lg sm:order-first	">
+        <Widget title="ABOUT US" extraClassName="about us max-w-lg sm:order-first">
           <p className="text-white text-md">
           Experience the beauty of the Mexican Caribbean with our premium transportation services. Our modern fleet of vehicles will take you to your destination in style and comfort. With our convenient online booking system, planning your transportation has never been easier. Trust us to get you to your destination safely and on time. Don't miss out on the adventure - book your transportation with us today!
           </p>
