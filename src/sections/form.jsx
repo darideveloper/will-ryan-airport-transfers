@@ -35,7 +35,6 @@ export default function Form() {
   const [airbnbAddress, setAirbnbAddress] = useState('')
   const [airbnbMunicipality, setAirbnbMunicipality] = useState('')
   const [airbnbMunicipalities, setAirbnbMunicipalities] = useState([])
-  const [airbnbMunicipalityPrice, setAirbnbMunicipalityPrice] = useState(0)
   const [arrivingDate, setArrivingDate] = useState('')
   const [arrivingTime, setArrivingTime] = useState('')
   const [arrivingAirline, setArrivingAirline] = useState('')
@@ -46,15 +45,6 @@ export default function Form() {
   const [departingFlight, setDepartingFlight] = useState('')
   const [total, setTotal] = useState(0)
 
-  function updateTotal (transport, municipality, current_hotel=hotel) {
-    // Update total based on hotel or airbnb
-    let total = transport
-    if (current_hotel == "Airbnb") {
-      total += municipality * 2
-    } 
-    setTotal(total)
-  }
-
   function handleUpdateType(id) {
     // Update active transport type
     setActiveTransportType(id)
@@ -62,8 +52,6 @@ export default function Form() {
     // Save price
     const price = transports.find(transport => transport.id == id).price
     setActiveTransportPrice(price)
-    
-    updateTotal (price, airbnbMunicipalityPrice)
   }
 
   function handleResize() {
@@ -110,12 +98,7 @@ export default function Form() {
 
       getAirbnbMunicipalities().then(apiAirbnbMunicipalities => {
         setAirbnbMunicipalities(apiAirbnbMunicipalities)
-        municipality = apiAirbnbMunicipalities[0].price
-        setAirbnbMunicipality(municipality)
-        setAirbnbMunicipalityPrice(apiAirbnbMunicipalities[0].price)
-
-        // Update total
-        updateTotal (transport, municipality)
+        setAirbnbMunicipality(apiAirbnbMunicipalities[0].value)
       })
     })
 
@@ -123,8 +106,25 @@ export default function Form() {
 
   }, [])
 
-  // Renmder again when price changeº
-  useEffect(() => { }, [airbnbMunicipalityPrice])
+  // Renmder again when prices change
+  useEffect(() => {
+
+  // Skip when data its loading
+  if (airbnbMunicipalities.length == 0 || hotels.length == 0) {
+    return undefined
+  }
+
+  // Update total based on hotel or airbnb
+    let total = activeTransportPrice
+    if (hotel == "Airbnb") {
+      const municipality_obj = airbnbMunicipalities.find(municipality => municipality.value == airbnbMunicipality)
+      total += municipality_obj.price * 2
+    } else {
+      const hotel_obj = hotels.find(h => h.value == hotel)
+      total += hotel_obj.price * 2
+    }
+    setTotal(total)
+  }, [hotel, airbnbMunicipality, activeTransportPrice])
 
 
   function getArraivingDepartingForm() {
@@ -245,16 +245,6 @@ export default function Form() {
                 // Save hotel value
                 const value = e.target.value
                 setHotel(value)
-
-                // Get active municipality
-                let price = airbnbMunicipalityPrice
-                if (!airbnbMunicipalityPrice) {
-                  price = airbnbMunicipalities[0].price
-                }
-
-                // Update total
-                console.log ({activeTransportPrice, price})
-                updateTotal (activeTransportPrice, price, value)
               }}
               options={hotels}
               activeOption={hotel}
@@ -272,12 +262,6 @@ export default function Form() {
                     // Update municipality data
                     const value = e.target.value
                     setAirbnbMunicipality(value)
-
-                    // Update total price
-                    const municipality = airbnbMunicipalities.find(municipality => municipality.value == value)
-                    setAirbnbMunicipalityPrice(municipality.price)
-                    updateTotal (activeTransportPrice, municipality.price)
-
                   }}
                   options={airbnbMunicipalities}
                   activeOption={airbnbMunicipality}

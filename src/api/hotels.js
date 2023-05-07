@@ -12,7 +12,7 @@ export async function getHotels () {
   for (const hotel of hotels) {
     const fields = hotel.fields
     data.push ({
-      value: fields.name, label: fields.name
+      value: fields.name, label: fields.name, price: fields.extra_price
     })
   }
 

@@ -13,11 +13,6 @@ export default function TransportType ({id, text, price, handleUpdateType, trans
   // active components with initialActive when loads
   useEffect(() => {
 
-    // Submit activate checked to parent
-    if (initialActive) {
-      handleUpdateType (id)
-    }
-
     // Detect if label is hover
     const input = document.querySelector (`[id="${id}"]`)
     const label = input.parentNode
