@@ -48,11 +48,11 @@ export default function Form() {
 
   function updateTotal (transport, municipality, current_hotel=hotel) {
     // Update total based on hotel or airbnb
+    let total = transport
     if (current_hotel == "Airbnb") {
-      setTotal(transport + municipality)
-    } else {
-      setTotal(transport)
-    }
+      total += municipality * 2
+    } 
+    setTotal(total)
   }
 
   function handleUpdateType(id) {
