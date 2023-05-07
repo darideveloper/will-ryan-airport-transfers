@@ -109,19 +109,25 @@ export default function Form() {
   // Renmder again when prices change
   useEffect(() => {
 
-  // Skip when data its loading
-  if (airbnbMunicipalities.length == 0 || hotels.length == 0) {
-    return undefined
-  }
+    // Skip when data its loading
+    if (airbnbMunicipalities.length == 0 || hotels.length == 0) {
+      return undefined
+    }
+    
+    // Get multipliear for round trip
+    let multiplier = 1
+    if (activeTransportType == "Arriving,Departing") {
+      multiplier = 2
+    }
 
-  // Update total based on hotel or airbnb
+    // Calculate total
     let total = activeTransportPrice
     if (hotel == "Airbnb") {
       const municipality_obj = airbnbMunicipalities.find(municipality => municipality.value == airbnbMunicipality)
-      total += municipality_obj.price * 2
+      total += municipality_obj.price * multiplier
     } else {
       const hotel_obj = hotels.find(h => h.value == hotel)
-      total += hotel_obj.price * 2
+      total += hotel_obj.price * multiplier
     }
     setTotal(total)
   }, [hotel, airbnbMunicipality, activeTransportPrice])
