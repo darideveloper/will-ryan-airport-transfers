@@ -1,18 +1,22 @@
 <div><a href='https://github.com/darideveloper/rivieramayaairporttransfers/blob/master/LICENSE' target='_blank'>
-            <img src='https://img.shields.io/github/license/darideveloper/rivieramayaairporttransfers.svg?style=for-the-badge' alt='MIT License' height='30px'/>
-        </a><a href='https://www.linkedin.com/in/francisco-dari-hernandez-6456b6181/' target='_blank'>
+                <img src='https://img.shields.io/github/license/darideveloper/rivieramayaairporttransfers.svg?style=for-the-badge' alt='MIT License' height='30px'/>
+            </a><a href='https://www.linkedin.com/in/francisco-dari-hernandez-6456b6181/' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=LinkedIn&color=0A66C2&logo=LinkedIn&logoColor=FFFFFF&label=' alt='Linkedin' height='30px'/>
             </a><a href='https://t.me/darideveloper' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Telegram&color=26A5E4&logo=Telegram&logoColor=FFFFFF&label=' alt='Telegram' height='30px'/>
             </a><a href='https://github.com/darideveloper' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=GitHub&color=181717&logo=GitHub&logoColor=FFFFFF&label=' alt='Github' height='30px'/>
-            </a><a href='https://www.fiverr.com/darideveloper?up_rollout=true' target='_blank'>
+            </a><a href='https://www.fiverr.com/darideveloper' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Fiverr&color=222222&logo=Fiverr&logoColor=1DBF73&label=' alt='Fiverr' height='30px'/>
             </a><a href='https://discord.com/users/992019836811083826' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Discord&color=5865F2&logo=Discord&logoColor=FFFFFF&label=' alt='Discord' height='30px'/>
             </a><a href='mailto:darideveloper@gmail.com?subject=Hello Dari Developer' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Gmail&color=EA4335&logo=Gmail&logoColor=FFFFFF&label=' alt='Gmail' height='30px'/>
+            </a><a href='https://www.twitch.tv/darideveloper' target='_blank'>
+                <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Twitch&color=b9a3e3&logo=Twitch&logoColor=ffffff&label=' alt='Twitch' height='30px'/>
             </a></div><div align='center'><br><br><img src='https://rivieramayaairporttransfers.com/imgs/page-logo-trans.png' alt='Riviera Maya Airport Transfers' height='80px'/>
+
+
 
 # Riviera Maya Airport Transfers
 
@@ -38,7 +42,7 @@ Project type: **client**
 
 # Related projects
 
-<div align='center'><a href='https://github.com/darideveloper/cancun-concierge' target='_blank'> <img src='https://github.com/darideveloper/cancun-concierge/raw/master/imgs/logo.png' alt='Cancun Concierge' title='Cancun Concierge' height='50px'/> </a><a href='https://github.com/darideveloper/ezbookingtours-store' target='_blank'> <img src='https://ezbookingtours.com/wp-content/uploads/2022/04/EZ-Booking-Tours-Logo.png' alt='EZBookingTours Store' title='EZBookingTours Store' height='50px'/> </a></div>
+<div align='center'><a href='https://github.com/darideveloper/cancun-concierge' target='_blank'> <img src='https://github.com/darideveloper/cancun-concierge/raw/master/imgs/logo.png' alt='Cancun Concierge' title='Cancun Concierge' height='50px'/> </a><a href='https://github.com/darideveloper/ezbookingtours-store' target='_blank'> <img src='https://ezbookingtours.com/wp-content/uploads/2022/04/EZ-Booking-Tours-Logo.png' alt='Ezbookingtours Store' title='Ezbookingtours Store' height='50px'/> </a><a href='https://github.com/darideveloper/sarina-abhi-airport-transfers' target='_blank'> <img src='https://cancunconciergedmc.com/sarina-abhi-airport-transfers/imgs/page-logo.png' alt='Sarina Abhi Airport Transfers' title='Sarina Abhi Airport Transfers' height='50px'/> </a></div>
 
 # Media
 
@@ -52,30 +56,30 @@ Project type: **client**
 
 # Details
 
-The project have a service dynamic form, who redirects to stripe checkout.
-
-The landing page include the following sections:
-* Header
-* Hero
-* Buy form
-* Our services
-* Footer
-
+The project have a service dynamic form, who redirects to stripe checkout.
+
+The landing page include the following sections:
+* Header
+* Hero
+* Buy form
+* Our services
+* Footer
+
 The buy form user dynamic data, like prices or available hotels, updated by the user in the same dashboard as the project EZBookingTours Store.
 
 # Roadmap
 
-* [x] Layout and responsive
-* [x] Select transport type
-* [x] Custom tailwind colors
-* [x] Dynamic arriving and departing forms
-* [x] React hooks
-* [x] Redirect to stripe checkout
-* [x] Custom scroll bar
-* [x] Hover effects
-* [x] Auto deploy with github pages
-* [x] Custom domain
-* [x] Loading spinner
-* [x] Airbnb options
+* [x] Layout and responsive
+* [x] Select transport type
+* [x] Custom tailwind colors
+* [x] Dynamic arriving and departing forms
+* [x] React hooks
+* [x] Redirect to stripe checkout
+* [x] Custom scroll bar
+* [x] Hover effects
+* [x] Auto deploy with github pages
+* [x] Custom domain
+* [x] Loading spinner
+* [x] Airbnb options
 * [x] Connect to django dashboard
 
