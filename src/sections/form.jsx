@@ -11,7 +11,7 @@ import FormText from "../components/form-text"
 
 // Api
 import { getHotels } from "../api/hotels"
-import { submitStripe } from "../api/stripe"
+import { formEndpoint } from "../api/api"
 import { getTransports } from "../api/transports"
 
 // Context
@@ -54,19 +54,6 @@ export default function Form() {
   function handleResize() {
     const mediaQuery = window.matchMedia('(max-width: 768px)')
     setMediaQuery(mediaQuery.matches)
-  }
-
-  function handleSubmit(e) {
-
-    // Don't submit form
-    e.preventDefault()
-
-    // Get current service price and name
-    const currentService = transports.find(transport => transport.id == activeTransportType)
-    const serviceName = currentService.text
-
-    // Submit to stripe
-    submitStripe(activeTransportType, serviceName, total, loading, setLoading)
   }
 
   useEffect(() => {
@@ -192,7 +179,7 @@ export default function Form() {
         text='Transportation Options'
       />
 
-      <form action="." method="post" className="mx-auto" onSubmit={e => { handleSubmit(e) }}>
+      <form action={formEndpoint} method="post" className="mx-auto">
         <TransportTypes
           handleUpdateType={handleUpdateType}
           activeTransportType={activeTransportType}
