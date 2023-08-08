@@ -13,7 +13,6 @@ import FormText from "../components/form-text"
 import { getHotels } from "../api/hotels"
 import { submitStripe } from "../api/stripe"
 import { getTransports } from "../api/transports"
-import { getAirbnbMunicipalities } from "../api/airbnb-municipality"
 
 // Context
 import LoadContext from '../context/load'
@@ -32,9 +31,6 @@ export default function Form() {
   const [passengers, setPassengers] = useState('1')
   const [hotel, setHotel] = useState('Airbnb')
   const [hotels, setHotels] = useState([])
-  const [airbnbAddress, setAirbnbAddress] = useState('')
-  const [airbnbMunicipality, setAirbnbMunicipality] = useState('')
-  const [airbnbMunicipalities, setAirbnbMunicipalities] = useState([])
   const [arrivingDate, setArrivingDate] = useState('')
   const [arrivingTime, setArrivingTime] = useState('')
   const [arrivingAirline, setArrivingAirline] = useState('')
@@ -44,6 +40,7 @@ export default function Form() {
   const [departingAirline, setDepartingAirline] = useState('')
   const [departingFlight, setDepartingFlight] = useState('')
   const [total, setTotal] = useState(0)
+  const [otherHotel, setOtherHotel] = useState('')
 
   function handleUpdateType(id) {
     // Update active transport type
@@ -95,11 +92,6 @@ export default function Form() {
       transport = apiTransports[0].price
       setActiveTransportPrice(transport)
       setTotal(apiTransports[0].price)
-
-      getAirbnbMunicipalities().then(apiAirbnbMunicipalities => {
-        setAirbnbMunicipalities(apiAirbnbMunicipalities)
-        setAirbnbMunicipality(apiAirbnbMunicipalities[0].value)
-      })
     })
 
 
@@ -108,11 +100,6 @@ export default function Form() {
 
   // Renmder again when prices change
   useEffect(() => {
-
-    // Skip when data its loading
-    if (airbnbMunicipalities.length == 0 || hotels.length == 0) {
-      return undefined
-    }
     
     // Get multipliear for round trip
     let multiplier = 1
@@ -122,15 +109,12 @@ export default function Form() {
 
     // Calculate total
     let total = activeTransportPrice
-    if (hotel == "Airbnb") {
-      const municipality_obj = airbnbMunicipalities.find(municipality => municipality.value == airbnbMunicipality)
-      total += municipality_obj.price * multiplier
-    } else {
-      const hotel_obj = hotels.find(h => h.value == hotel)
+    const hotel_obj = hotels.find(h => h.value == hotel)
+    if (hotel_obj) {
       total += hotel_obj.price * multiplier
     }
     setTotal(total)
-  }, [hotel, airbnbMunicipality, activeTransportPrice])
+  }, [hotel, activeTransportPrice])
 
 
   function getArraivingDepartingForm() {
@@ -245,8 +229,8 @@ export default function Form() {
               text="Maximum eight passengers per van"
             />
             <Select
-              label='Hotel or Airbnb'
-              name='hotel-airbnb'
+              label='Hotel'
+              name='hotel'
               handleUpdate={(e) => {
                 // Save hotel value
                 const value = e.target.value
@@ -256,33 +240,18 @@ export default function Form() {
               activeOption={hotel}
             />
 
-            {/* Render address input or select for airbnbType */}
+            {/* Render input for other hotel */}
             {
-              (hotel == 'Airbnb') &&
-              <>
-                <Select
-                  label='Resort destination'
-                  name='airbnb-municipality'
-                  handleUpdate={(e) => {
-
-                    // Update municipality data
-                    const value = e.target.value
-                    setAirbnbMunicipality(value)
-                  }}
-                  options={airbnbMunicipalities}
-                  activeOption={airbnbMunicipality}
-                />
-                <Input
-                  label='Airbnb address'
-                  placeholder='Enter your Airbnb address'
-                  type='text'
-                  name='airbnb-address'
-                  handleUpdate={(e) => setAirbnbAddress(e.target.value)}
-                  value={airbnbAddress}
-                />
-              </>
+              (hotel == 'Other hotel in Playa del Carmen area') &&
+              <Input
+                label='Hotel name'
+                placeholder='Enter your other hotel name'
+                type='text'
+                name='other-othel'
+                handleUpdate={(e) => setOtherHotel(e.target.value)}
+                value={otherHotel}
+              />
             }
-
 
           </Fieldset>
 
