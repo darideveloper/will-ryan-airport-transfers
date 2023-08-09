@@ -220,6 +220,9 @@ export default function Form() {
           title: 'Thank you!',
           text: 'Your purchase was successful',
           footer: 'We will contact you soon'
+        }).then (() => {
+          // Reload page
+          window.location.reload()
         })
       }
       
