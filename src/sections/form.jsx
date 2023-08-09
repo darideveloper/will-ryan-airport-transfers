@@ -11,12 +11,15 @@ import FormText from "../components/form-text"
 
 // Api
 import { getHotels } from "../api/hotels"
-import { formEndpoint } from "../api/api"
+import { saleEndpoint } from "../api/api"
 import { getTransports } from "../api/transports"
 
 // Context
 import LoadContext from '../context/load'
 import { useContext } from 'react'
+
+// Libraries
+import Swal from 'sweetalert2'
 
 export default function Form() {
 
@@ -58,7 +61,7 @@ export default function Form() {
 
   useEffect(() => {
 
-    let transport, municipality
+    let transport
 
     // Detect when resize screen and update media query status
     window.addEventListener('resize', () => {
@@ -87,7 +90,7 @@ export default function Form() {
 
   // Renmder again when prices change
   useEffect(() => {
-    
+
     // Get multipliear for round trip
     let multiplier = 1
     if (activeTransportType == "Arriving,Departing") {
@@ -162,6 +165,73 @@ export default function Form() {
     return fieldsets
   }
 
+  async function handleSubmit(e) {
+
+    function alertError() {
+      // Alert error for api call
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: 'Try again later'
+      })
+    }
+
+    e.preventDefault()
+
+    // Toggle loading status
+    setLoading(true)
+
+    // Get data from innputs
+    const inputsData = []
+    const inputs = document.querySelectorAll("input:not(.no-collect), select:not(.no-collect)")
+    inputs.forEach(input => {
+      let name = input.name.charAt(0).toUpperCase() + input.name.slice(1)
+      name = name.replace("-", " ")
+      const value = input.value
+      inputsData.push(`${name}: ${value}`)
+    })
+    const serviceDescription = inputsData.join(", ")
+
+    try {
+      const response = await fetch(saleEndpoint, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "name": name,
+          "last-name": lastName,
+          "price": total,
+          "details": serviceDescription,
+        }),
+        mode: "cors",
+      })
+      const response_json = await response.json()
+  
+      // Show error if api call fails
+      if (response_json.status == "error") {
+        console.log ({response_json})
+        alertError()
+      } else {        
+        Swal.fire({
+          icon: 'success',
+          title: 'Thank you!',
+          text: 'Your purchase was successful',
+          footer: 'We will contact you soon'
+        })
+      }
+      
+    } catch (error) {
+      console.log ({error})
+      alertError()
+    }
+
+    // Disable loading status
+    setLoading(false)
+  }
+
   // Generate passager options
   const maxPassenger = 8
   const passengersData = []
@@ -179,7 +249,7 @@ export default function Form() {
         text='Transportation Options'
       />
 
-      <form action={formEndpoint} method="post" className="mx-auto">
+      <form action="." method="post" className="mx-auto" onSubmit={handleSubmit}>
         <TransportTypes
           handleUpdateType={handleUpdateType}
           activeTransportType={activeTransportType}

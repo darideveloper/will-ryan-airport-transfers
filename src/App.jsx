@@ -5,6 +5,8 @@ import Services from './sections/services'
 import Footer from './sections/footer'
 import Load from './sections/load'
 
+import 'sweetalert2/src/sweetalert2.scss'
+
 function App() {
 
   return (
