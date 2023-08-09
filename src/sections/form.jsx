@@ -44,6 +44,7 @@ export default function Form() {
   const [departingFlight, setDepartingFlight] = useState('')
   const [total, setTotal] = useState(0)
   const [otherHotel, setOtherHotel] = useState('')
+  const [email, setEmail] = useState('')
 
   function handleUpdateType(id) {
     // Update active transport type
@@ -205,6 +206,7 @@ export default function Form() {
           "last-name": lastName,
           "price": total,
           "details": serviceDescription,
+          "email": email
         }),
         mode: "cors",
       })
@@ -277,6 +279,14 @@ export default function Form() {
               name='last-name'
               handleUpdate={(e) => setLastName(e.target.value)}
               value={lastName}
+            />
+            <Input 
+              label='Email'
+              placeholder='Enter your email'
+              type='email'
+              name='email'
+              handleUpdate={(e) => setEmail(e.target.value)}
+              value={email}
             />
             <Select
               label='Number of passengers'
