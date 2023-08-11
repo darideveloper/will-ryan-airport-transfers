@@ -15,7 +15,7 @@ export default function Hero () {
                 text-md sm:text-lg md:text-2xl lg:text-4xl
               `}
             >
-              TRANSPORTATION TO YOUR HOTEL OR AIRBNB
+              Please book your airport transportation at your earliest convenience
             </span>
           </h1>
         </div>
