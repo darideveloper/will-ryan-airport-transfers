@@ -251,7 +251,7 @@ export default function Form() {
   return (
     <section className="buy-form container" id="buy">
       <Subtitle
-        text='Transportation Options'
+        text='Transportation'
       />
 
       <form action="." method="post" className="mx-auto" onSubmit={handleSubmit}>
@@ -289,7 +289,7 @@ export default function Form() {
               value={email}
             />
             <Select
-              label='Number of passengers'
+              label='Maximum four passengers per vehicle'
               name='passengers'
               handleUpdate={(e) => setPassengers(e.target.value)}
               options={passengersData}
@@ -335,7 +335,7 @@ export default function Form() {
             {total}.00 USD
           </span>
         </p>
-        <input type="submit" value="Buy Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue" />
+        <input type="submit" value="Reserve Now" className="no-collect w-48 mx-auto mt-10 block bg-blue border-blue border-2 text-gold py-3 text-2xl font-bold cursor-pointer rounded-xl transition-all duration-300 hover:rounded-3xl hover:bg-white hover:text-blue" />
 
       </form>
     </section>
