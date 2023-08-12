@@ -26,7 +26,7 @@ export default function Form() {
   const { loading, setLoading } = useContext(LoadContext)
 
   const [transports, setTransports] = useState([])
-  const [activeTransportType, setActiveTransportType] = useState('Arriving')
+  const [activeTransportType, setActiveTransportType] = useState("Arriving,Departing")
   const [activeTransportPrice, setActiveTransportPrice] = useState(0)
   const [mediaQuery, setMediaQuery] = useState(false)
   const [name, setName] = useState('')
