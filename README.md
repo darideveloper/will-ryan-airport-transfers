@@ -14,13 +14,15 @@
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Gmail&color=EA4335&logo=Gmail&logoColor=FFFFFF&label=' alt='Gmail' height='30px'/>
             </a><a href='https://www.twitch.tv/darideveloper' target='_blank'>
                 <img src='https://img.shields.io/static/v1?style=for-the-badge&message=Twitch&color=b9a3e3&logo=Twitch&logoColor=ffffff&label=' alt='Twitch' height='30px'/>
-            </a></div><div align='center'><br><br>
+            </a></div><div align='center'><br><br><img src='https://github.com/darideveloper/will-ryan-airport-transfers/blob/master/public/imgs/favicon.png?raw=true' alt='Will Ryan Airport Transfers' height='80px'/>
+
+
 
 # Will Ryan Airport Transfers
 
 Visit at: **[cancunconciergedmc.com/will-ryan-airport-transfers](https://cancunconciergedmc.com/will-ryan-airport-transfers/)**
 
-aasdasd
+Landing page with integrated payments for Airport Transfers services
 
 Project type: **client**
 
@@ -28,15 +30,50 @@ Project type: **client**
             <summary>Table of Contents</summary>
             <ol>
 <li><a href='#buildwith'>Build With</a></li>
+<li><a href='#relatedprojects'>Related Projects</a></li>
 <li><a href='#media'>Media</a></li>
-<li><a href='#details'>Details</a></li></ol>
+<li><a href='#details'>Details</a></li>
+<li><a href='#roadmap'>Roadmap</a></li></ol>
         </details><br>
 
 # Build with
 
-<div align='center'><a href='https://docs.djangoproject.com/en/4.0/' target='_blank'> <img src='https://cdn.svgporn.com/logos/django.svg' alt='Django' title='Django' height='50px'/> </a></div>
+<div align='center'><a href='https://developer.mozilla.org/en-US/docs/Web/HTML' target='_blank'> <img src='https://i.imgur.com/OitgDfl.jpeg' alt='HTML + CSS' title='HTML + CSS' height='50px'/> </a><a href='https://react.dev/' target='_blank'> <img src='https://cdn.svgporn.com/logos/react.svg' alt='React' title='React' height='50px'/> </a><a href='https://sass-lang.com/' target='_blank'> <img src='https://cdn.svgporn.com/logos/sass.svg' alt='Sass' title='Sass' height='50px'/> </a><a href='https://www.w3schools.com/js/js_es6.asp' target='_blank'> <img src='https://cdn.svgporn.com/logos/javascript.svg' alt='JavaScript' title='JavaScript' height='50px'/> </a><a href='https://tailwindcss.com/' target='_blank'> <img src='https://cdn.svgporn.com/logos/tailwindcss-icon.svg' alt='Tailwind CSS' title='Tailwind CSS' height='50px'/> </a><a href='https://vitejs.dev/guide/' target='_blank'> <img src='https://cdn.svgporn.com/logos/vitejs.svg' alt='Vite' title='Vite' height='50px'/> </a></div>
+
+# Related projects
+
+<div align='center'><a href='https://github.com/darideveloper/rivieramayaairporttransfers' target='_blank'> <img src='https://rivieramayaairporttransfers.com/imgs/page-logo-trans.png' alt='Riviera Maya Airport Transfers' title='Riviera Maya Airport Transfers' height='50px'/> </a><a href='https://github.com/darideveloper/cancun-concierge' target='_blank'> <img src='https://github.com/darideveloper/cancun-concierge/raw/master/imgs/logo.png' alt='Cancun Concierge' title='Cancun Concierge' height='50px'/> </a><a href='https://github.com/darideveloper/sarina-abhi-airport-transfers' target='_blank'> <img src='https://cancunconciergedmc.com/sarina-abhi-airport-transfers/imgs/page-logo.png' alt='Sarina Abhi Airport Transfers' title='Sarina Abhi Airport Transfers' height='50px'/> </a><a href='https://github.com/darideveloper/ezbookingtours-store' target='_blank'> <img src='https://ezbookingtours.com/wp-content/uploads/2022/04/EZ-Booking-Tours-Logo.png' alt='Ezbookingtours Store' title='Ezbookingtours Store' height='50px'/> </a></div>
+
+# Media
+
+![landing](https://github.com/darideveloper/will-ryan-airport-transfers/blob/master/screenshots/landing.png?raw=true)
 
 # Details
 
-asda
+The project have a service dynamic form, who is saved in a backend service.
+
+The project is based in [Riviera Maya Airport Transfers](https://github.com/darideveloper/rivieramayaairporttransfers), but without stripe integration. 
+
+The landing page include the following sections:
+* Header
+* Hero
+* Buy form
+* Our services
+* Footer
+
+The buy form user dynamic data, like prices or available hotels, updated by the user in the same dashboard as the project EZBookingTours Store.
+
+# Roadmap
+
+* [x] Layout and responsive
+* [x] Select transport type
+* [x] Custom tailwind colors
+* [x] Dynamic arriving and departing forms
+* [x] React hooks
+* [x] Custom scroll bar
+* [x] Hover effects
+* [x] Auto deploy
+* [x] Custom domain
+* [x] Loading spinner
+* [x] Connect to django dashboard
 
