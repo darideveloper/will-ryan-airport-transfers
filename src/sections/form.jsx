@@ -80,12 +80,10 @@ export default function Form() {
 
     getTransports().then(apiTransports => {
       setTransports(apiTransports)
-      transport = apiTransports[0].price
+      transport = apiTransports[2].price
       setActiveTransportPrice(transport)
-      setTotal(apiTransports[0].price)
+      setTotal(apiTransports[2].price)
     })
-
-
 
   }, [])
 
