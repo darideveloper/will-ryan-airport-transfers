@@ -218,7 +218,7 @@ export default function Form() {
         Swal.fire({
           icon: 'success',
           title: 'Thank you!',
-          text: 'Your purchase was successful',
+          text: 'Your transportation has been reserved succesfully',
           footer: 'We will contact you soon'
         }).then (() => {
           // Reload page
